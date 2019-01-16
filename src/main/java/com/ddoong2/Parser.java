@@ -36,10 +36,14 @@ public class Parser {
     }
 
     public boolean find(String search, String source) {
-        checkValidation(search);
+        checkValidation(search, source);
 
         if (isEmptyString(search)) {
             return true;
+        }
+
+        if (isLessThenSearchLength(search, source)) {
+            return false;
         }
 
         int startIndex = getStartIndex(source, search.charAt(0));
@@ -56,8 +60,12 @@ public class Parser {
         return true;
     }
 
-    private void checkValidation(String search) {
-        if (search == null) {
+    private boolean isLessThenSearchLength(String search, String source) {
+        return search.length() > source.length();
+    }
+
+    private void checkValidation(String search, String source) {
+        if (search == null || source == null) {
             throw new IllegalArgumentException();
         }
     }

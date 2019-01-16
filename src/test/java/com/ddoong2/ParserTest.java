@@ -36,5 +36,6 @@ public class ParserTest {
         assertThat(parser.find("ㄴㄷ", "가나 다라"), is(false));
         assertThat(parser.find("ㄱㄴㄷㄹ ㅁ", "가나다라 마바사"), is(true));
         assertThat(parser.find("ㄱㄴㄷㄹ ㅁ", "가나다라 마바사abcd"), is(true));
+        assertThat(parser.find("ㄱㄴㄷㄹ", "가나다"), is(false));
     }
 }
