@@ -21,7 +21,7 @@ public class PrintInitialSoundSearchResultTest {
     public void setUp() throws Exception {
         Parser parser = new Parser();
         Repository repository = new Repository(parser);
-        StatementPrinter statementPrinter = new StatementPrinter();
+        StatementPrinter statementPrinter = new StatementPrinter(console);
 
         initialSearch = new InitialSearch(repository, statementPrinter);
     }
@@ -36,6 +36,7 @@ public class PrintInitialSoundSearchResultTest {
         initialSearch.addData("가나다라 마바사2");
 
         initialSearch.search("ㄱㄴ");
+        initialSearch.result();
 
         InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Result");

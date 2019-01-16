@@ -36,24 +36,19 @@ public class Parser {
     }
 
     public boolean find(String search, String source) {
-        if (search == null) {
-            throw new IllegalArgumentException();
-        }
+        checkValidation(search);
 
-        if (search.equalsIgnoreCase("")) {
+        if (isEmptyString(search)) {
             return true;
         }
 
-        int startIndex = findCharStartIndex(search.charAt(0), source);
+        int startIndex = getStartIndex(source, search.charAt(0));
         if ( startIndex == -1) {
             return false;
         }
 
         for (int index = startIndex, searchIndex=0; index < startIndex + search.length() ; index++, searchIndex++) {
-            char search_syllable = getCharToInitialSound(search.charAt(searchIndex));
-            char syllable = getCharToInitialSound(source.charAt(index));
-
-            if (search_syllable != syllable) {
+            if (getCharToInitialSound(search.charAt(searchIndex)) != getCharToInitialSound(source.charAt(index))) {
                 return false;
             }
         }
@@ -61,29 +56,37 @@ public class Parser {
         return true;
     }
 
-    private int findCharStartIndex(char findSyllable, String source) {
-        final char findInitialSound = getCharToInitialSound(findSyllable);
+    private void checkValidation(String search) {
+        if (search == null) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private boolean isEmptyString(String search) {
+        return search.equalsIgnoreCase("");
+    }
+
+    private int getStartIndex(String source, char findSyllable) {
 
         for (int index = 0; index < source.length(); index++) {
-            if ( findInitialSound == getCharToInitialSound(source.charAt(index))) {
+            if ( getCharToInitialSound(findSyllable) == getCharToInitialSound(source.charAt(index))) {
                 return index;
             }
         }
-
         return -1;
     }
 
     private char getCharToInitialSound(char syllable) {
         if (isHangul(syllable)) {
             return ((char) (CONSONANT_START_CODE + ((syllable - SYLLABLE_START_CODE) / CYCLE)));
-        } else if ( isInputInitailHangule(syllable) ) {
+        } else if ( isInputCompatibleInitialSound(syllable) ) {
             return ((char) compatibleInitial.get(Integer.valueOf(syllable)).intValue());
         }
 
         return syllable;
     }
 
-    private boolean isInputInitailHangule(char syllable) {
+    private boolean isInputCompatibleInitialSound(char syllable) {
         return compatibleInitial.containsKey(Integer.valueOf(syllable));
     }
 
