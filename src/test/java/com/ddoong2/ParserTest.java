@@ -3,6 +3,7 @@ package com.ddoong2;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -21,9 +22,15 @@ public class ParserTest {
         assertThat(parser.find("", "가나다라 마바사"), is(true));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void 검색_문자가_NULL_이라면_IllegalArgumentException_이_발생한다() {
-        parser.find(null, "가나다라 마바사");
+        Exception thrown = null;
+        try {
+            parser.find(null, "가나다라 마바사");
+        } catch (Exception e) {
+            thrown = e;
+        }
+        assertThat(thrown, instanceOf(IllegalArgumentException.class));
     }
 
     @Test
