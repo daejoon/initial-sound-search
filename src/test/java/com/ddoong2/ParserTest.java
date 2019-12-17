@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 
 public class ParserTest {
@@ -23,9 +23,12 @@ public class ParserTest {
 
     @Test
     public void 검색_문자가_NULL_이라면_IllegalArgumentException_이_발생한다() {
-        assertThatThrownBy(() -> {
+
+        Throwable thrown = catchThrowable(() -> {
             parser.find(null, "가나다라 마바사");
-        }).isInstanceOf(IllegalArgumentException.class);
+        });
+
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
