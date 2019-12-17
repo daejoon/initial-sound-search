@@ -8,8 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InitialSearchTest {
@@ -61,7 +61,7 @@ public class InitialSearchTest {
         initialSearch.search("");
         initialSearch.result();
 
-        verify(statementPrinter).print(datas);
+        then(statementPrinter).should().print(datas);
     }
 
     @Test
@@ -77,6 +77,6 @@ public class InitialSearchTest {
         initialSearch.search("ㄱㄴ");
         initialSearch.result();
 
-        verify(statementPrinter).print(datas);
+        then(statementPrinter).should().print(datas);
     }
 }

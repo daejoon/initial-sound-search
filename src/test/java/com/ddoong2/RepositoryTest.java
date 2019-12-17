@@ -6,8 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,17 +34,17 @@ public class RepositoryTest {
 
         String[] search = repository.search("");
 
-        assertThat(search.length, is(3));
+        assertThat(search.length).isEqualTo(3);
     }
 
     @Test
     public void 결색결과_일치하지_않는다면_빈_배열을_반환한다() {
         String[] search = repository.search("ㅈㅈ");
-        assertThat(search.length, is(0));
+        assertThat(search.length).isEqualTo(0);
 
         search = repository.search("ㅋㅋ");
 
-        assertThat(search.length, is(0));
+        assertThat(search.length).isEqualTo(0);
     }
 
     @Test
@@ -54,7 +53,7 @@ public class RepositoryTest {
 
         String[] search = repository.search("ㄱㄴㄷㄹ");
 
-        assertThat(search.length, is(1));
-        assertThat(search[0], is("가나다라 마바사"));
+        assertThat(search.length).isEqualTo(1);
+        assertThat(search[0]).isEqualTo("가나다라 마바사");
     }
 }

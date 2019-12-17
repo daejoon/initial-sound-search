@@ -5,9 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ListToArrayTest {
 
@@ -18,7 +16,7 @@ public class ListToArrayTest {
         data.add("B");
         data.add("C");
 
-        assertThat(data.toArray(new String[5]).length, is(5));
+        assertThat(data.toArray(new String[5]).length).isEqualTo(5);
     }
 
     @Test
@@ -28,7 +26,7 @@ public class ListToArrayTest {
         data.add("B");
         data.add("C");
 
-        assertThat(data.toArray(new String[2]).length, is(3));
+        assertThat(data.toArray(new String[2]).length).isEqualTo(3);
     }
 
     @Test
@@ -40,8 +38,8 @@ public class ListToArrayTest {
 
         String[] array = data.toArray(new String[5]);
 
-        assertThat(array[2], is("C"));
-        assertThat(array[3], is(nullValue()));
-        assertThat(array[4], is(nullValue()));
+        assertThat(array[2]).isEqualTo("C");
+        assertThat(array[3]).isNull();
+        assertThat(array[4]).isNull();
     }
 }
