@@ -3,10 +3,11 @@ package com.ddoong2;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.inOrder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StatementPrinterTest {
@@ -23,20 +24,35 @@ public class StatementPrinterTest {
 
     @Test
     public void 검색조건이_없는_리스트를_출력한다() {
-        statementPrinter.print(new String[0]);
+        // given
+        String[] notSearches = new String[0];
 
-        then(console).should().printLine("Result");
-        then(console).should().printLine("-------------------------------------------------------");
+        // when
+        statementPrinter.print(notSearches);
+
+        // then
+        InOrder inOrder = inOrder(console);
+        inOrder.verify(console).printLine("Result");
+        inOrder.verify(console).printLine("-------------------------------------------------------");
     }
 
     @Test
     public void 검색조건이_있는_리스트를_출력한다() {
-        statementPrinter.print(new String[] {
-                "가나다라"
-        });
+        // given
+        String result = "Result";
+        String delimiter = "-------------------------------------------------------";
+        String search = "가나다라";
+        String[] searches = {
+                search
+        };
 
-        then(console).should().printLine("Result");
-        then(console).should().printLine("-------------------------------------------------------");
-        then(console).should().printLine("가나다라");
+        // when
+        statementPrinter.print(searches);
+
+        // then
+        InOrder inOrder = inOrder(console);
+        inOrder.verify(console).printLine(result);
+        inOrder.verify(console).printLine(delimiter);
+        inOrder.verify(console).printLine(search);
     }
 }
